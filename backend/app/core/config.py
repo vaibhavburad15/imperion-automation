@@ -1,5 +1,6 @@
 """Application configuration loaded from environment variables."""
 from pydantic_settings import BaseSettings
+from pydantic import field_validator
 from functools import lru_cache
 
 
@@ -15,6 +16,7 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://redis:6379/0"
     CELERY_BROKER_URL: str = "redis://redis:6379/1"
     CELERY_RESULT_BACKEND: str = "redis://redis:6379/2"
+    CELERY_TASK_ALWAYS_EAGER: bool = False
 
     # Security
     SECRET_KEY: str = "change-me-in-production-please-use-a-real-secret"
@@ -35,6 +37,15 @@ class Settings(BaseSettings):
     # Retry / queue tuning
     MAX_RETRIES: int = 3
     RETRY_BACKOFF_BASE: int = 2  # seconds
+
+    @field_validator("DEBUG", mode="before")
+    @classmethod
+    def parse_debug(cls, value):
+        if isinstance(value, str):
+            normalized = value.strip().lower()
+            if normalized in {"release", "prod", "production"}:
+                return False
+        return value
 
     class Config:
         env_file = ".env"

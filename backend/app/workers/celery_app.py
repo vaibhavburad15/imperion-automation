@@ -4,8 +4,8 @@ from app.core.config import settings
 
 celery_app = Celery(
     "imperion",
-    broker=settings.CELERY_BROKER_URL,
-    backend=settings.CELERY_RESULT_BACKEND,
+    broker=settings.CELERY_BROKER_URL or "memory://",
+    backend=settings.CELERY_RESULT_BACKEND or None,
     include=["app.workers.tasks"],
 )
 celery_app.conf.update(
@@ -17,4 +17,6 @@ celery_app.conf.update(
     task_acks_late=True,
     worker_prefetch_multiplier=1,
     task_default_retry_delay=10,
+    task_always_eager=settings.CELERY_TASK_ALWAYS_EAGER,
+    task_store_eager_result=False,
 )

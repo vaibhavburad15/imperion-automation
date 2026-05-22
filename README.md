@@ -203,9 +203,6 @@ if no API key is configured for Slack/Telegram/WhatsApp/Sheets/Calendar, the cal
 
 ---
 
-## 🎬 Demo video script (5-7 minutes)
-
-A suggested flow for the demo video lives in [`docs/DEMO_SCRIPT.md`](docs/DEMO_SCRIPT.md).
 
 ## 📐 Architecture deep-dive
 

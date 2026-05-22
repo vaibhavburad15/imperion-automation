@@ -90,7 +90,7 @@ def run():
                            name="Globex Hook", config={}))
 
         db.commit()
-        print("✅ Seed complete.")
+        print("Seed complete.")
         print("   Login: admin@acme.com / password123  (workspace: acme)")
         print("   Login: admin@globex.com / password123 (workspace: globex)")
     finally:
